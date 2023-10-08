@@ -11,7 +11,7 @@ const ExpenseCard = ({ expense }: ExpenseCardProps) => {
 
       <div className={styles.expensesContainer}>
         {expense.expenses.map((expense: Expense) => (
-          <Link to={`/edit-expense/${expense.id}`}>
+          <Link key={expense.id} to={`/edit-expense/${expense.id}`}>
             <SingleExpense key={expense.id} expense={expense} />
           </Link>
         ))}

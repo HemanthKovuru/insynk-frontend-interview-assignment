@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import AddExpense from "./pages/Expense/Expense";
 import Category from "./pages/Category/Category";
-import { useEffect } from "react";
 import { setInitialData } from "./utils";
 
 const App = () => {
@@ -13,9 +12,7 @@ const App = () => {
     { path: "/category", element: <Category /> },
   ]);
 
-  useEffect(() => {
-    setInitialData();
-  }, []);
+  setInitialData();
 
   return (
     <div>
