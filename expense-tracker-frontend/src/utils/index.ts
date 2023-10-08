@@ -1,4 +1,4 @@
-import { Expense, categoriesData } from "../interfaces/global";
+import { Expense, categoriesData, expenses } from "../interfaces/global";
 
 export const setCategories = (cats: [object]) => {
   if (!cats) {
@@ -74,4 +74,15 @@ export const convertNumToStr = (expense: number, type?: string): string => {
 
 export const getData = (type: string) => {
   return JSON.parse(localStorage.getItem(type) || "");
+};
+
+export const setInitialData = () => {
+  const cats = JSON.parse(localStorage.getItem("categories") as string);
+  const tempExpenses = JSON.parse(localStorage.getItem("expenses") as string);
+  if (!cats) {
+    localStorage.setItem("categories", JSON.stringify(categoriesData));
+  }
+  if (!tempExpenses) {
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+  }
 };
