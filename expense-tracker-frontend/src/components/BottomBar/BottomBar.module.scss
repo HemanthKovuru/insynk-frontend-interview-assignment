@@ -11,15 +11,11 @@
     flex: 1;
     padding: 16px 15px;
     text-align: center;
-  }
-
-  .expense {
-    background-color: #4b97f2;
-    color: #fff;
-  }
-
-  .category {
     background-color: #c5d7ee;
     color: #fff;
   }
+}
+
+.activePage {
+  background-color: #4b97f2 !important;
 }

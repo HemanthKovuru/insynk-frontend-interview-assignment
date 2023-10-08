@@ -1,28 +1,32 @@
+import { useState } from "react";
+import { ExpenseCategory } from "../../interfaces/global";
 import styles from "./SingleCategory.module.scss";
+import RemoveModal from "../RemoveModal/RemoveModal";
 
-interface ExpenseCategory {
-  name: string;
-  isMain: boolean;
-  order: number;
-}
 interface SingleCategoryProps {
   category: ExpenseCategory;
-  deleteCategoryByName: (category: string, isMain: boolean) => void;
+  deleteCategoryByName: (categoryName: string, isMain: boolean) => void;
 }
 
 const SingleCategory = ({
   category,
   deleteCategoryByName,
 }: SingleCategoryProps) => {
+  const [removePop, setRemovePop] = useState(false);
+
   return (
     <div className={styles.container}>
       <div className={styles.category}>{category.name}</div>
-      <button
-        onClick={() => deleteCategoryByName(category.name, category.isMain)}
-        className={styles.remove}
-      >
+      <button onClick={() => setRemovePop(true)} className={styles.remove}>
         X
       </button>
+      {removePop && (
+        <RemoveModal
+          setRemovePop={setRemovePop}
+          category={category}
+          deleteCategoryByName={deleteCategoryByName}
+        />
+      )}
     </div>
   );
 };

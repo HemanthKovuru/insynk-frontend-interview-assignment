@@ -84,6 +84,7 @@ const AddEditExpense = ({
           <label className={styles.label}>Amount:</label>
           <div className={styles.amountContainer}>
             <input
+              placeholder="Amount"
               type="number"
               name="amount"
               value={expense.amount}

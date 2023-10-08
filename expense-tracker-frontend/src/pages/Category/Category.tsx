@@ -2,13 +2,8 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import styles from "./Category.module.scss";
 import BottomBar from "../../components/BottomBar/BottomBar";
-// import RemoveModal from "../../components/RemoveModal/RemoveModal";
 import SingleCategory from "../../components/SingleCategory/SingleCategory";
 import { ExpenseCategory } from "../../interfaces/global";
-
-// interface AddCategoryProps {
-//   onAddCategory?: (categoryName: string) => void;
-// }
 
 const Category = () => {
   const cats = JSON.parse(localStorage.getItem("categories") as string);
@@ -22,9 +17,11 @@ const Category = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (categoryName.trim() !== "") {
-      const temp = [...cats, { isMain: false, order: 0, name: categoryName }];
+      const temp = [
+        ...cats,
+        { isMain: false, order: categories.length + 1, name: categoryName },
+      ];
       setCategories(temp);
-      console.log("cats", temp);
 
       localStorage.setItem("categories", JSON.stringify(temp));
       setCategoryName("");
@@ -51,16 +48,42 @@ const Category = () => {
     }
   };
 
+  const handleDragStart = (e: React.DragEvent, index: number) => {
+    e.dataTransfer.setData("index", index.toString());
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent, newIndex: number) => {
+    e.preventDefault();
+    const oldIndex = parseInt(e.dataTransfer.getData("index"));
+    const updatedCategories = [...categories];
+    const [draggedCategory] = updatedCategories.splice(oldIndex, 1);
+    updatedCategories.splice(newIndex, 0, draggedCategory);
+    setCategories(updatedCategories);
+
+    localStorage.setItem("categories", JSON.stringify(updatedCategories));
+  };
+
   return (
     <div className={styles.container}>
       <Navbar name="Category List" />
       <div className={styles.categoryContainer}>
-        {categories.map((category: ExpenseCategory) => (
-          <SingleCategory
-            key={category.name}
-            category={category}
-            deleteCategoryByName={deleteCategoryByName}
-          />
+        {categories.map((category: ExpenseCategory, index: number) => (
+          <div
+            key={index}
+            draggable
+            onDragStart={(e) => handleDragStart(e, index)}
+            onDragOver={handleDragOver}
+            onDrop={(e) => handleDrop(e, index)}
+          >
+            <SingleCategory
+              category={category}
+              deleteCategoryByName={deleteCategoryByName}
+            />
+          </div>
         ))}
 
         <form className={styles.form} onSubmit={handleSubmit}>
@@ -74,7 +97,6 @@ const Category = () => {
           <button type="submit">Add</button>
         </form>
         <BottomBar />
-        {/* <RemoveModal /> */}
       </div>
     </div>
   );

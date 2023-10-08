@@ -15,13 +15,11 @@ const AddExpense = () => {
     (expense: Expense) => expense.id === parseInt(expenseId as string)
   );
 
-  console.log("expenseId", expenseId);
-
   const Categories = JSON.parse(localStorage.getItem("categories") as string);
   const [expense, setExpense] = useState<Expense>({
     id: Math.round(Math.random() * 100000),
     type: ExpenseTypeEnum.CashIn,
-    category: Categories[0], // Default to the first category
+    category: Categories[0],
     date: new Date(),
     amount: 0,
     description: "",
@@ -31,7 +29,7 @@ const AddExpense = () => {
     if (expenseId) {
       setExpense(singleExpense);
     }
-  }, [expenseId]);
+  }, [expenseId, singleExpense]);
 
   // 1.] update expense type
   const handleTypeButtonClick = (type: ExpenseTypeEnum) => {
@@ -78,7 +76,7 @@ const AddExpense = () => {
     console.log("easdasda", expense);
   };
 
-  if (!singleExpense) {
+  if (expenseId && !singleExpense) {
     return <div>The expense you are looking for is not there bro {`:(`}</div>;
   } else {
     return (

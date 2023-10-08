@@ -27,6 +27,10 @@
     flex: 1;
     padding: 16px 15px;
     text-align: center;
+
+    &:hover {
+      background-color: #4b97f2;
+    }
   }
 
   .cancel {
