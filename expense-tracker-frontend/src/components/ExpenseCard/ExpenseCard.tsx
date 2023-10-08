@@ -5,8 +5,6 @@ import SingleExpense from "../SingleExpense/SingleExpense";
 import styles from "./ExpenseCard.module.scss";
 
 const ExpenseCard = ({ expense }: ExpenseCardProps) => {
-  console.log("expense", expense);
-
   return (
     <div>
       <ExpenseHeader month={expense.month} expenses={expense.expenses} />

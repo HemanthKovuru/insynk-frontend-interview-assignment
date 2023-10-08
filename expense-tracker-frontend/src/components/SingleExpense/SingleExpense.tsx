@@ -1,13 +1,8 @@
-import { Expense } from "../../interfaces/global";
+import { SingleExpenseProps } from "../../interfaces/global";
 import { convertNumToStr } from "../../utils";
 import styles from "./SingleExpense.module.scss";
 
-interface SingleExpenseProps {
-  expense: Expense;
-}
-
 const SingleExpense = ({ expense }: SingleExpenseProps) => {
-  console.log("exps", expense.category);
   return (
     <div
       className={`${styles.container} ${

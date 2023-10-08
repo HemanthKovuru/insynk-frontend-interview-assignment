@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 
 const BottomBar = () => {
   const { pathname } = useLocation();
-  console.log(location);
 
   return (
     <div className={styles.navBtns}>

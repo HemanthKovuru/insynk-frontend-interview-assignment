@@ -1,3 +1,5 @@
+@import "./../../mixins/mixins.scss";
+
 .navbar {
   font-size: 15px;
   background-color: #c5d7ee;
@@ -9,6 +11,10 @@
   font-weight: 500;
   .name {
     flex: 1.5;
+
+    @include lg {
+      flex: 1;
+    }
   }
 
   .empty {

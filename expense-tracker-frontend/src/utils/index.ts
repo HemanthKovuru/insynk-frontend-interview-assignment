@@ -50,7 +50,6 @@ export const calculateNetExpenses = (data: Expense[]): string => {
   });
 
   const netExpense = cashInTotal - cashOutTotal;
-  console.log("net expense", netExpense);
   console.log(convertNumToStr(netExpense));
 
   return convertNumToStr(netExpense);
@@ -67,8 +66,12 @@ export const convertNumToStr = (expense: number, type?: string): string => {
     return `- ¥${Math.abs(expense)}`;
   }
   if (expense > 0) {
-    return `¥${expense}`;
+    return `+ ¥${expense}`;
   } else {
     return `- ¥${Math.abs(expense)}`;
   }
+};
+
+export const getData = (type: string) => {
+  return JSON.parse(localStorage.getItem(type) || "");
 };

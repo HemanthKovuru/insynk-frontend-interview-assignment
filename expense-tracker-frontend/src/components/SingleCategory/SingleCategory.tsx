@@ -1,12 +1,7 @@
 import { useState } from "react";
-import { ExpenseCategory } from "../../interfaces/global";
+import { SingleCategoryProps } from "../../interfaces/global";
 import styles from "./SingleCategory.module.scss";
 import RemoveModal from "../RemoveModal/RemoveModal";
-
-interface SingleCategoryProps {
-  category: ExpenseCategory;
-  deleteCategoryByName: (categoryName: string, isMain: boolean) => void;
-}
 
 const SingleCategory = ({
   category,

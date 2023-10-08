@@ -6,12 +6,11 @@ import { ExpenseHeaderProps } from "./../../interfaces/global";
 import { groupExpensesByMonth } from "../../utils";
 
 const Dashboard = () => {
+  // group expense by month
   let expenses = JSON.parse(localStorage.getItem("expenses") as string);
   if (expenses) {
     expenses = groupExpensesByMonth(expenses);
   }
-
-  console.log("asda", expenses);
 
   return (
     <div className={styles.container}>

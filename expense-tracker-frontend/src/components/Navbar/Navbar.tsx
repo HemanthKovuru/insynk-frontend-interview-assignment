@@ -1,11 +1,6 @@
+import { NavbarProps } from "../../interfaces/global";
 import styles from "./Navbar.module.scss";
 import { Link } from "react-router-dom";
-
-interface NavbarProps {
-  name: string;
-  buttonText?: string;
-  // onClick?: () => void;
-}
 
 const Navbar = ({ name, buttonText }: NavbarProps) => {
   return (

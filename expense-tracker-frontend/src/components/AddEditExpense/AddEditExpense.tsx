@@ -1,23 +1,11 @@
 import styles from "./AddEditExpense.module.scss";
 import {
+  AddEditExpenseProps,
   Expense,
   ExpenseCategory,
   ExpenseTypeEnum,
 } from "../../interfaces/global";
 import { Link } from "react-router-dom";
-
-interface AddEditExpenseProps {
-  expense: Expense;
-  handleTypeButtonClick: (type: ExpenseTypeEnum) => void;
-  handleSubmit: (e: React.FormEvent) => void;
-  handleCategoryChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  handleChange: (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => void;
-  expenseId: string;
-}
 
 const AddEditExpense = ({
   expense,
@@ -30,6 +18,7 @@ const AddEditExpense = ({
   const Categories = JSON.parse(localStorage.getItem("categories") as string);
   const expenses = JSON.parse(localStorage.getItem("expenses") as string);
 
+  // update expense
   const findExpenseByIdAndUpdate = (data: Expense[], newData: Expense) => {
     const updatedData = data.map((expense) => {
       if (expense.id === parseInt(expenseId)) {

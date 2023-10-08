@@ -9,27 +9,30 @@ import AddEditExpense from "../../components/AddEditExpense/AddEditExpense";
 import { useParams } from "react-router-dom";
 
 const AddExpense = () => {
+  // toggle  add expense to edit expense
   const { expenseId } = useParams();
   const expenses = JSON.parse(localStorage.getItem("expenses") as string);
   const singleExpense = expenses.find(
     (expense: Expense) => expense.id === parseInt(expenseId as string)
   );
-
   const Categories = JSON.parse(localStorage.getItem("categories") as string);
+
+  // state
   const [expense, setExpense] = useState<Expense>({
     id: Math.round(Math.random() * 100000),
     type: ExpenseTypeEnum.CashIn,
-    category: Categories[0],
+    category: Categories[0]?.name,
     date: new Date(),
     amount: 0,
     description: "",
   });
 
+  // toggle for adding and editing expense
   useEffect(() => {
     if (expenseId) {
       setExpense(singleExpense);
     }
-  }, [expenseId, singleExpense]);
+  }, [expenseId]);
 
   // 1.] update expense type
   const handleTypeButtonClick = (type: ExpenseTypeEnum) => {
@@ -65,15 +68,12 @@ const AddExpense = () => {
       alert("Please enter amount");
       return;
     }
-
     const expenses = JSON.parse(localStorage.getItem("expenses") as string);
     if (expenses) {
       expenses.push({ ...expense, amount: expense.amount * 1 });
       localStorage.setItem("expenses", JSON.stringify(expenses));
-
       alert("Expense added");
     }
-    console.log("easdasda", expense);
   };
 
   if (expenseId && !singleExpense) {

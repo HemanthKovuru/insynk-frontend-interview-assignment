@@ -1,11 +1,5 @@
-import { ExpenseCategory } from "../../interfaces/global";
+import { RemoveModalProps } from "../../interfaces/global";
 import styles from "./RemoveModal.module.scss";
-
-interface RemoveModalProps {
-  category: ExpenseCategory;
-  deleteCategoryByName: (categoryName: string, isMain: boolean) => void;
-  setRemovePop: (value: boolean) => void;
-}
 
 const RemoveModal = ({
   category,
@@ -29,7 +23,6 @@ const RemoveModal = ({
           <button
             onClick={() => {
               deleteCategoryByName(category.name, category.isMain);
-              // setRemovePop(false);
             }}
             className={styles.confirm}
           >

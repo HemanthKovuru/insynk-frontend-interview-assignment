@@ -1,9 +1,16 @@
+@import "./../../mixins/mixins.scss";
+
 .container {
   .categoryContainer {
     padding: 30px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    @include lg {
+      margin: 10% 30%;
+      padding: 0;
+    }
   }
 }
 
