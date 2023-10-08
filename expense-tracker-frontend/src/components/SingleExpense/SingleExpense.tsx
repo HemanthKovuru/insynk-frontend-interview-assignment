@@ -7,13 +7,14 @@ interface SingleExpenseProps {
 }
 
 const SingleExpense = ({ expense }: SingleExpenseProps) => {
+  console.log("exps", expense.category);
   return (
     <div
       className={`${styles.container} ${
         expense.type === "Cash In" && styles.cashIn
       }`}
     >
-      <div className={styles.expenseType}>{expense.category}</div>
+      <div className={styles.expenseType}>{expense.category.toString()}</div>
       <div className={styles.price}>
         {convertNumToStr(expense.amount, expense.type)}
       </div>

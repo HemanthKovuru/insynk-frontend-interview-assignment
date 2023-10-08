@@ -50,6 +50,9 @@ export const calculateNetExpenses = (data: Expense[]): string => {
   });
 
   const netExpense = cashInTotal - cashOutTotal;
+  console.log("net expense", netExpense);
+  console.log(convertNumToStr(netExpense));
+
   return convertNumToStr(netExpense);
 };
 

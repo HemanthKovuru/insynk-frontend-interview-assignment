@@ -2,30 +2,16 @@ import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
 import styles from "./AddExpense.module.scss";
-import { ExpenseCategory } from "../../interfaces/global";
-
-enum ExpenseTypeEnum {
-  CashIn = "Cash In",
-  CashOut = "Cash Out",
-}
-
-interface Category {
-  name: string;
-  isMain: boolean;
-  order: number;
-}
-
-interface Expense {
-  type: ExpenseTypeEnum;
-  category: Category;
-  date: Date;
-  amount: number;
-  description: string;
-}
+import {
+  Expense,
+  ExpenseCategory,
+  ExpenseTypeEnum,
+} from "../../interfaces/global";
 
 const AddExpense: React.FC = () => {
   const Categories = JSON.parse(localStorage.getItem("categories") as string);
   const [expense, setExpense] = useState<Expense>({
+    id: Math.round(Math.random() * 100000),
     type: ExpenseTypeEnum.CashIn,
     category: Categories[0], // Default to the first category
     date: new Date(),
@@ -46,7 +32,7 @@ const AddExpense: React.FC = () => {
     );
 
     if (selectedCategory) {
-      setExpense({ ...expense, category: selectedCategory });
+      setExpense({ ...expense, category: selectedCategory.name });
     }
   };
 
@@ -63,8 +49,20 @@ const AddExpense: React.FC = () => {
   // 4.] add expnese to the list
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (expense.amount <= 0) {
+      alert("Please enter amount");
+      return;
+    }
+
+    const expenses = JSON.parse(localStorage.getItem("expenses") as string);
+    if (expenses) {
+      expenses.push({ ...expense, amount: expense.amount * 1 });
+      localStorage.setItem("expenses", JSON.stringify(expenses));
+
+      alert("Expense added");
+    }
     // Handle the submission of the expense data here
-    console.log(expense);
+    console.log("easdasda", expense);
   };
 
   return (
@@ -99,7 +97,7 @@ const AddExpense: React.FC = () => {
             <label className={styles.label}>Category:</label>
             <select
               name="category"
-              value={expense.category.name}
+              value={expense.category}
               onChange={handleCategoryChange}
             >
               {Categories.map((category: ExpenseCategory) => (
@@ -126,7 +124,7 @@ const AddExpense: React.FC = () => {
             <input
               type="date"
               name="date"
-              value={expense.date.toISOString().split("T")[0]}
+              value={new Date(expense.date).toISOString().split("T")[0]}
               onChange={handleChange}
             />
           </div>

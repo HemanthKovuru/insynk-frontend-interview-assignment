@@ -17,7 +17,7 @@ const Dashboard = () => {
     <div className={styles.container}>
       <Navbar name="Expense Tracking" buttonText="Add" />
       <div className={styles.cardsContainer}>
-        {expenses.map((expense: ExpenseHeaderProps) => (
+        {expenses?.map((expense: ExpenseHeaderProps) => (
           <ExpenseCard expense={expense} />
         ))}
       </div>

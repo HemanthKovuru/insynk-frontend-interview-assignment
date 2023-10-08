@@ -12,7 +12,7 @@ const ExpenseCard = ({ expense }: ExpenseCardProps) => {
 
       <div className={styles.expensesContainer}>
         {expense.expenses.map((expense: Expense) => (
-          <SingleExpense expense={expense} />
+          <SingleExpense key={expense.id} expense={expense} />
         ))}
       </div>
     </div>
