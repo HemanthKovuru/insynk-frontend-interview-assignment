@@ -43,9 +43,9 @@ export const calculateNetExpenses = (data: Expense[]): string => {
 
   data.forEach((expense) => {
     if (expense.type === "Cash In") {
-      cashInTotal += expense.amount;
+      cashInTotal += expense.amount * 1;
     } else if (expense.type === "Cash Out") {
-      cashOutTotal += expense.amount;
+      cashOutTotal += expense.amount * 1;
     }
   });
 

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Expense, ExpenseCardProps } from "../../interfaces/global";
 import ExpenseHeader from "../ExpenseHeader/ExpenseHeader";
 import SingleExpense from "../SingleExpense/SingleExpense";
@@ -12,7 +13,9 @@ const ExpenseCard = ({ expense }: ExpenseCardProps) => {
 
       <div className={styles.expensesContainer}>
         {expense.expenses.map((expense: Expense) => (
-          <SingleExpense key={expense.id} expense={expense} />
+          <Link to={`/edit-expense/${expense.id}`}>
+            <SingleExpense key={expense.id} expense={expense} />
+          </Link>
         ))}
       </div>
     </div>

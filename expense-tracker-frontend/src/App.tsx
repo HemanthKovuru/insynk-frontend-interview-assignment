@@ -9,6 +9,7 @@ const App = () => {
   const router = createBrowserRouter([
     { path: "/", element: <Dashboard /> },
     { path: "/add-expense", element: <AddExpense /> },
+    { path: "/edit-expense/:expenseId", element: <AddExpense /> },
     { path: "/category", element: <Category /> },
   ]);
 

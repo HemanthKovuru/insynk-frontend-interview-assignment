@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
-import { Link } from "react-router-dom";
-import styles from "./AddExpense.module.scss";
 import {
   Expense,
   ExpenseCategory,
   ExpenseTypeEnum,
 } from "../../interfaces/global";
+import AddEditExpense from "../../components/AddEditExpense/AddEditExpense";
+import { useParams } from "react-router-dom";
 
-const AddExpense: React.FC = () => {
+const AddExpense = () => {
+  const { expenseId } = useParams();
+  const expenses = JSON.parse(localStorage.getItem("expenses") as string);
+  const singleExpense = expenses.find(
+    (expense: Expense) => expense.id === parseInt(expenseId as string)
+  );
+
+  console.log("expenseId", expenseId);
+
   const Categories = JSON.parse(localStorage.getItem("categories") as string);
   const [expense, setExpense] = useState<Expense>({
     id: Math.round(Math.random() * 100000),
@@ -18,6 +26,12 @@ const AddExpense: React.FC = () => {
     amount: 0,
     description: "",
   });
+
+  useEffect(() => {
+    if (expenseId) {
+      setExpense(singleExpense);
+    }
+  }, [expenseId]);
 
   // 1.] update expense type
   const handleTypeButtonClick = (type: ExpenseTypeEnum) => {
@@ -61,97 +75,26 @@ const AddExpense: React.FC = () => {
 
       alert("Expense added");
     }
-    // Handle the submission of the expense data here
     console.log("easdasda", expense);
   };
 
-  return (
-    <div>
-      <Navbar name="Add Expense" />
-      <div className={styles.container}>
-        <div className={styles.label}>Type</div>
-        <div className={styles.expenseType}>
-          <button
-            onClick={() => handleTypeButtonClick(ExpenseTypeEnum.CashIn)}
-            style={{
-              backgroundColor:
-                expense.type === ExpenseTypeEnum.CashIn ? "#4b97f2" : "#c5d7ee",
-            }}
-          >
-            Cash In
-          </button>
-          <button
-            onClick={() => handleTypeButtonClick(ExpenseTypeEnum.CashOut)}
-            style={{
-              backgroundColor:
-                expense.type === ExpenseTypeEnum.CashOut
-                  ? "#4b97f2"
-                  : "#c5d7ee",
-            }}
-          >
-            Cash Out
-          </button>
-        </div>
-        <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
-          <div className={styles.item}>
-            <label className={styles.label}>Category:</label>
-            <select
-              name="category"
-              value={expense.category}
-              onChange={handleCategoryChange}
-            >
-              {Categories.map((category: ExpenseCategory) => (
-                <option key={category.name} value={category.name}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className={styles.item}>
-            <label className={styles.label}>Amount:</label>
-            <div className={styles.amountContainer}>
-              <input
-                type="number"
-                name="amount"
-                value={expense.amount}
-                onChange={handleChange}
-              />
-              <span className={styles.yen}>¥</span>
-            </div>
-          </div>
-          <div className={styles.item}>
-            <label className={styles.label}>Date:</label>
-            <input
-              type="date"
-              name="date"
-              value={new Date(expense.date).toISOString().split("T")[0]}
-              onChange={handleChange}
-            />
-          </div>
-          <div className={styles.item}>
-            <label className={styles.label}>Description:</label>
-            <textarea
-              name="description"
-              value={expense.description}
-              onChange={handleChange}
-            />
-          </div>
-        </form>
-        <div className={styles.btns}>
-          <Link to={"/"} className={styles.btnOutline}>
-            Cancel
-          </Link>
-          <button
-            onClick={(e) => handleSubmit(e)}
-            className={styles.btnFull}
-            type="submit"
-          >
-            Add
-          </button>
-        </div>
+  if (!singleExpense) {
+    return <div>The expense you are looking for is not there bro {`:(`}</div>;
+  } else {
+    return (
+      <div>
+        <Navbar name={expenseId ? "Edit Expense" : "Add Expense"} />
+        <AddEditExpense
+          expense={expense}
+          handleCategoryChange={handleCategoryChange}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          handleTypeButtonClick={handleTypeButtonClick}
+          expenseId={expenseId as string}
+        />
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default AddExpense;
