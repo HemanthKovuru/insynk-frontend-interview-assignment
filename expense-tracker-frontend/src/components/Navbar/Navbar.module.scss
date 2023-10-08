@@ -1,0 +1,29 @@
+.navbar {
+  font-size: 15px;
+  background-color: #c5d7ee;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  font-weight: 500;
+  .name {
+    flex: 1.5;
+  }
+
+  .empty {
+    flex: 1;
+  }
+
+  .btn {
+    padding: 10px 25px;
+    border: none;
+    background-color: #4b97f2;
+    color: #fff;
+  }
+}
+
+.addition {
+  text-align: center;
+  justify-content: center;
+}

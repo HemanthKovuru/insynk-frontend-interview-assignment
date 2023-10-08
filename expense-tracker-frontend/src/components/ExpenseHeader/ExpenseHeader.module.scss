@@ -1,0 +1,16 @@
+.head {
+  border-bottom: 3px solid #4b97f2;
+  color: #4b97f2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  .date {
+  }
+
+  .expense {
+    font-size: 23px;
+  }
+}

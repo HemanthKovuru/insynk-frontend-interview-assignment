@@ -1,0 +1,25 @@
+.navBtns {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+
+  .expense,
+  .category {
+    flex: 1;
+    padding: 16px 15px;
+    text-align: center;
+  }
+
+  .expense {
+    background-color: #4b97f2;
+    color: #fff;
+  }
+
+  .category {
+    background-color: #c5d7ee;
+    color: #fff;
+  }
+}
