@@ -14,14 +14,14 @@ const App = () => {
   ]);
 
   const setInitialData = () => {
-    const cats = JSON.parse(
-      localStorage.getItem("categories") ?? JSON.stringify(categoriesData)
-    );
-    const tempExpenses = JSON.parse(
-      localStorage.getItem("expenses") ?? JSON.stringify(expenses)
-    );
-    localStorage.setItem("categories", JSON.stringify(cats));
-    localStorage.setItem("expenses", JSON.stringify(tempExpenses));
+    const cats = JSON.parse(localStorage.getItem("categories") as string);
+    const tempExpenses = JSON.parse(localStorage.getItem("expenses") as string);
+    if (!cats) {
+      localStorage.setItem("categories", JSON.stringify(categoriesData));
+    }
+    if (!tempExpenses) {
+      localStorage.setItem("expenses", JSON.stringify(expenses));
+    }
   };
 
   useEffect(() => {
