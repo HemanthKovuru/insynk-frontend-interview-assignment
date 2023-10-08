@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
 import styles from "./AddExpense.module.scss";
+import { ExpenseCategory } from "../../interfaces/global";
 
 enum ExpenseTypeEnum {
   CashIn = "Cash In",
@@ -22,14 +23,8 @@ interface Expense {
   description: string;
 }
 
-const Categories: Category[] = [
-  { isMain: true, order: 1, name: "Food" },
-  { isMain: true, order: 2, name: "Transportation" },
-  { isMain: true, order: 3, name: "Work" },
-  { isMain: false, order: 4, name: "Traveling" },
-];
-
 const AddExpense: React.FC = () => {
+  const Categories = JSON.parse(localStorage.getItem("categories") as string);
   const [expense, setExpense] = useState<Expense>({
     type: ExpenseTypeEnum.CashIn,
     category: Categories[0], // Default to the first category
@@ -38,6 +33,24 @@ const AddExpense: React.FC = () => {
     description: "",
   });
 
+  // 1.] update expense type
+  const handleTypeButtonClick = (type: ExpenseTypeEnum) => {
+    setExpense({ ...expense, type });
+  };
+
+  // 2.] update category
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCategoryName = e.target.value;
+    const selectedCategory = Categories.find(
+      (category: ExpenseCategory) => category.name === selectedCategoryName
+    );
+
+    if (selectedCategory) {
+      setExpense({ ...expense, category: selectedCategory });
+    }
+  };
+
+  // 3.] update amount, date, desc
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -47,25 +60,11 @@ const AddExpense: React.FC = () => {
     setExpense({ ...expense, [name]: value });
   };
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedCategoryName = e.target.value;
-    const selectedCategory = Categories.find(
-      (category) => category.name === selectedCategoryName
-    );
-
-    if (selectedCategory) {
-      setExpense({ ...expense, category: selectedCategory });
-    }
-  };
-
+  // 4.] add expnese to the list
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle the submission of the expense data here
     console.log(expense);
-  };
-
-  const handleTypeButtonClick = (type: ExpenseTypeEnum) => {
-    setExpense({ ...expense, type });
   };
 
   return (
@@ -95,7 +94,7 @@ const AddExpense: React.FC = () => {
             Cash Out
           </button>
         </div>
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
           <div className={styles.item}>
             <label className={styles.label}>Category:</label>
             <select
@@ -103,7 +102,7 @@ const AddExpense: React.FC = () => {
               value={expense.category.name}
               onChange={handleCategoryChange}
             >
-              {Categories.map((category) => (
+              {Categories.map((category: ExpenseCategory) => (
                 <option key={category.name} value={category.name}>
                   {category.name}
                 </option>
@@ -144,7 +143,11 @@ const AddExpense: React.FC = () => {
           <Link to={"/"} className={styles.btnOutline}>
             Cancel
           </Link>
-          <button className={styles.btnFull} type="submit">
+          <button
+            onClick={(e) => handleSubmit(e)}
+            className={styles.btnFull}
+            type="submit"
+          >
             Add
           </button>
         </div>
