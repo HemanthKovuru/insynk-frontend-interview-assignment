@@ -1,0 +1,41 @@
+.container {
+  background-color: #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  border: 1px solid #92c0fa;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 90%;
+
+  .top {
+    padding: 35px 25px;
+    margin-left: 15px;
+  }
+}
+
+.navBtns {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  .cancel,
+  .confirm {
+    flex: 1;
+    padding: 16px 15px;
+    text-align: center;
+  }
+
+  .cancel {
+    background-color: #4b97f2;
+    color: #fff;
+  }
+
+  .confirm {
+    background-color: #c5d7ee;
+    color: #fff;
+  }
+}

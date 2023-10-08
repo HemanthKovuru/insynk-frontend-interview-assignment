@@ -1,0 +1,43 @@
+.container {
+  .categoryContainer {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.form {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  .categoryInput {
+    padding: 7px 12px;
+    width: 100%;
+    border: 1px solid #4b97f2;
+    font-size: inherit;
+    font-family: inherit;
+
+    &:focus {
+      outline: none;
+      border: 1px solid #0de15f;
+    }
+
+    &::-webkit-input-placeholder {
+      color: #4b97f2;
+    }
+
+    &::placeholder {
+      color: #4b97f2;
+    }
+  }
+
+  button {
+    padding: 8px 25px;
+    border: none;
+    background-color: #4b97f2;
+    color: #fff;
+  }
+}
